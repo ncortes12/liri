@@ -96,24 +96,7 @@ if (input === "my-tweets") {
 else if (input === "spotify-this-song") {
   if (userSong === "") {
     userSong = 'The Sign';
-    y=14;
-    song.search({ type: 'track',  query: userSong }, function (err, data) {
-      if (err) {
-        return console.log('Error occurred: ' + err);
-      }
-      var songOutput = "\nArtist: " + data.tracks.items[y].album.artists[0].name + "\n" + 
-      "\nAlbum: " + data.tracks.items[y].album.name + "\n" + 
-      "\nSong Title: " + data.tracks.items[y].name + "\n" + 
-      "\nLink to song: " + data.tracks.items[y].preview_url + "\n" + 
-      "---------------------------------------" + "\n";
-      console.log(songOutput)
-      fs.appendFile("log.txt" , songOutput, function(err){
-        if (err) {
-          console.log(err);
-        }
-      })
-      
-    });
+   spotSong();
   }
   else {
     spotSong();
