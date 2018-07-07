@@ -30,10 +30,15 @@ function tweets() {
   client.get('statuses/user_timeline', params, function (error, tweets, response) {
     if (!error) {
       for (var x = 0; x < tweets.length; x++) {
-
-        console.log("Created: " + tweets[x].created_at);
-        console.log("Tweet: " + tweets[x].text);
+        
+        var tweetCreate = "Created: " + tweets[x].created_at 
+        var tweetOutput =  "Tweet: " + tweets[x].text
+        console.log(tweetCreate);
+        console.log(tweetOutput);
         console.log("---------------------------------");
+
+       
+
       }
     }
   });
@@ -45,11 +50,13 @@ function spotSong() {
       return console.log('Error occurred: ' + err);
     }
    
-    
+    for (var y = 0; y < data.tracks.items.length; y++){
     console.log("Artist: " + data.tracks.items[y].album.artists[0].name);
     console.log("Album: " + data.tracks.items[y].album.name);
     console.log("Song Title: " + data.tracks.items[y].name);
     console.log("Link to song: " + data.tracks.items[y].preview_url);
+    console.log("---------------------------------------");
+    }
   });
 }
 //function to perform the OMDB search
@@ -77,8 +84,17 @@ if (input === "my-tweets") {
 else if (input === "spotify-this-song") {
   if (userSong === "") {
     userSong = 'The Sign';
-    y = 14;
-    spotSong();
+    y=14;
+    song.search({ type: 'track',  query: userSong }, function (err, data) {
+      if (err) {
+        return console.log('Error occurred: ' + err);
+      }
+      console.log("Artist: " + data.tracks.items[y].album.artists[0].name);
+      console.log("Album: " + data.tracks.items[y].album.name);
+      console.log("Song Title: " + data.tracks.items[y].name);
+      console.log("Link to song: " + data.tracks.items[y].preview_url);
+      
+    });
   }
   else {
     spotSong();
@@ -106,7 +122,7 @@ if (dataArr[0] === "my-tweets"){
   tweets();
 }
 else if (dataArr[0] === "movie-this"){
-  movieName = dataArr[1];
+  queryUrl = "http://www.omdbapi.com/?t=" + dataArr[1] + "&y=&plot=short&apikey=trilogy"; 
   movieThis();
 }
 else if (dataArr[0] === "spotify-this-song"){
