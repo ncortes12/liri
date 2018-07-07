@@ -31,14 +31,14 @@ function tweets() {
     if (!error) {
       for (var x = 0; x < tweets.length; x++) {
         
-        var tweetCreate = "Created: " + tweets[x].created_at 
-        var tweetOutput =  "Tweet: " + tweets[x].text
-        console.log(tweetCreate);
+        var tweetOutput = "\nCreated: " + tweets[x].created_at + "\n" + 
+        "\nTweet: " + tweets[x].text + "\n";
         console.log(tweetOutput);
-        console.log("---------------------------------");
-
-       
-
+        fs.appendFile("log.txt" , tweetOutput, function(err){
+          if (err) {
+            console.log(err);
+          }
+        })
       }
     }
   });
@@ -51,11 +51,17 @@ function spotSong() {
     }
    
     for (var y = 0; y < data.tracks.items.length; y++){
-    console.log("Artist: " + data.tracks.items[y].album.artists[0].name);
-    console.log("Album: " + data.tracks.items[y].album.name);
-    console.log("Song Title: " + data.tracks.items[y].name);
-    console.log("Link to song: " + data.tracks.items[y].preview_url);
-    console.log("---------------------------------------");
+    var songOutput = "\nArtist: " + data.tracks.items[y].album.artists[0].name + "\n" + 
+    "\nAlbum: " + data.tracks.items[y].album.name + "\n" + 
+    "\nSong Title: " + data.tracks.items[y].name + "\n" + 
+    "\nLink to song: " + data.tracks.items[y].preview_url + "\n" + 
+    "---------------------------------------" + "\n";
+    console.log(songOutput)
+    fs.appendFile("log.txt" , songOutput, function(err){
+      if (err) {
+        console.log(err);
+      }
+    })
     }
   });
 }
@@ -64,14 +70,20 @@ function movieThis() {
   request(queryUrl, function (error, response, body) {
     if (!error && response.statusCode === 200) {
 
-      console.log("Title: " + JSON.parse(body).Title);
-      console.log("This movie was made in " + JSON.parse(body).Year);
-      console.log("IMBD rated this movie " + JSON.parse(body).imdbRating);
-      console.log("Rotten Tomatoes rated this movie " + JSON.parse(body).Ratings[1].Value);
-      console.log("This movie was produced in " + JSON.parse(body).Country);
-      console.log("In this movie they speak " + JSON.parse(body).Language);
-      console.log("Plot: " + JSON.parse(body).Plot);
-      console.log("This movie starred " + JSON.parse(body).Actors);
+      var movieOutput = "\nTitle: " + JSON.parse(body).Title + "\n" + 
+      "\nThis movie was made in " + JSON.parse(body).Year + "\n" + 
+      "\nIMBD rated this movie " + JSON.parse(body).imdbRating + "\n" + 
+      "\nRotten Tomatoes rated this movie " + JSON.parse(body).Ratings[1].Value + "\n" +
+      "\nThis movie was produced in " + JSON.parse(body).Country + "\n" + 
+      "\nIn this movie they speak " + JSON.parse(body).Language + "\n" + 
+      "\nPlot: " + JSON.parse(body).Plot + "\n" + 
+      "\nThis movie starred " + JSON.parse(body).Actors + "\n"
+      console.log(movieOutput);
+      fs.appendFile("log.txt" , movieOutput, function(err){
+        if (err) {
+          console.log(err);
+        }
+      })
     }
   })
 }
@@ -89,10 +101,17 @@ else if (input === "spotify-this-song") {
       if (err) {
         return console.log('Error occurred: ' + err);
       }
-      console.log("Artist: " + data.tracks.items[y].album.artists[0].name);
-      console.log("Album: " + data.tracks.items[y].album.name);
-      console.log("Song Title: " + data.tracks.items[y].name);
-      console.log("Link to song: " + data.tracks.items[y].preview_url);
+      var songOutput = "\nArtist: " + data.tracks.items[y].album.artists[0].name + "\n" + 
+      "\nAlbum: " + data.tracks.items[y].album.name + "\n" + 
+      "\nSong Title: " + data.tracks.items[y].name + "\n" + 
+      "\nLink to song: " + data.tracks.items[y].preview_url + "\n" + 
+      "---------------------------------------" + "\n";
+      console.log(songOutput)
+      fs.appendFile("log.txt" , songOutput, function(err){
+        if (err) {
+          console.log(err);
+        }
+      })
       
     });
   }
